@@ -45,12 +45,27 @@ NSString *const AUTH_STATE_KEY = @"authstate";
 }
 
 - (void) mainViewDidLoad {
-	
+    
+	[speedsController addObject:[Speed speedWithName:@"Gigabit Ethernet" speed:1024000]];
+	[speedsController addObject:[Speed speedWithName:@"802.11n Wi-Fi" speed:307200]];
+    [speedsController addObject:[Speed speedWithName:@"Fast Ethernet" speed:102400]];
+	[speedsController addObject:[Speed speedWithName:@"802.11g Wi-Fi" speed:55296]];
+    [speedsController addObject:[Speed speedWithName:@"WiMAX" speed:40960]];
+	[speedsController addObject:[Speed speedWithName:@"ADSL2+" speed:24576]];
+	[speedsController addObject:[Speed speedWithName:@"HSPA+" speed:21504]];
+	[speedsController addObject:[Speed speedWithName:@"ADSL2" speed:12288]];
+	[speedsController addObject:[Speed speedWithName:@"802.11b Wi-Fi" speed:11264]];
+    [speedsController addObject:[Speed speedWithName:@"Ethernet" speed:10240]];
+	[speedsController addObject:[Speed speedWithName:@"ADSL" speed:8192]];
+	[speedsController addObject:[Speed speedWithName:@"HSPA" speed:3686]];
+	[speedsController addObject:[Speed speedWithName:@"802.11-1997 Wi-Fi" speed:2048]];
 	[speedsController addObject:[Speed speedWithName:@"T1" speed:1572]];
 	[speedsController addObject:[Speed speedWithName:@"DSL" speed:768]];
 	[speedsController addObject:[Speed speedWithName:@"3G" speed:384]];
 	[speedsController addObject:[Speed speedWithName:@"Edge" speed:64]];
-	[speedsController addObject:[Speed speedWithName:@"Dialup" speed:48]];
+	[speedsController addObject:[Speed speedWithName:@"V.92 Dialup" speed:56]];
+	[speedsController addObject:[Speed speedWithName:@"V.34 Dialup" speed:34]];
+	[speedsController addObject:[Speed speedWithName:@"V.32 Dialup" speed:9]];
 }
 
 - (NSString *)execute:(NSString *)command withArguments:(NSArray *)arguments {
@@ -132,7 +147,7 @@ NSString *const AUTH_STATE_KEY = @"authstate";
 		[speedLimitLabel setStringValue:[NSString stringWithFormat:@"%ld", speed.speed]];
 	}
 	else {
-		[speedLimitLabel setStringValue:@"-"];
+		[speedLimitLabel setStringValue:@"∞"];
 		[startStopButton setTitle:@"Slow Down"];
 	}
 }
@@ -201,12 +216,12 @@ NSString *const AUTH_STATE_KEY = @"authstate";
 	authorizationState = [[prefs objectForKey:AUTH_STATE_KEY] integerValue];
 	
 	self.rules = [prefs objectForKey:RULES_KEY];
-	[speedLimitLabel setStringValue:@"-"];
+	[speedLimitLabel setStringValue:@"∞"];
 	
-	if (authorizationState == SFAuthorizationViewLockedState)
+	/*if (authorizationState == SFAuthorizationViewLockedState)
 		[startStopButton setTitle:@"-"];
 	else
-		[startStopButton setTitle:@"Slow Down"];
+		[startStopButton setTitle:@"Slow Down"];*/
 }
 
 - (void)didSelect {
@@ -258,8 +273,8 @@ NSString *const AUTH_STATE_KEY = @"authstate";
 	[removeButton setEnabled:enable];
 	[startStopButton setEnabled:enable];
 	
-	if (!enable)
-		[startStopButton setTitle:@"-"];
+	/*if (!enable)
+		[startStopButton setTitle:@"-"];*/
 }
 
 -(IBAction)addPort:(id)sender {
