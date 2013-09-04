@@ -51,6 +51,9 @@ NSString *const AUTH_STATE_KEY = @"authstate";
 	[speedsController addObject:[Speed speedWithName:@"3G" speed:384]];
 	[speedsController addObject:[Speed speedWithName:@"Edge" speed:64]];
 	[speedsController addObject:[Speed speedWithName:@"Dialup" speed:48]];
+    [speedsController addObject:[Speed speedWithName:@"VerySlow" speed:20]];
+    [speedsController addObject:[Speed speedWithName:@"VVerySlow" speed:10]];
+    [speedsController addObject:[Speed speedWithName:@"VVVerySlow" speed:3]];
 }
 
 - (NSString *)execute:(NSString *)command withArguments:(NSArray *)arguments {
