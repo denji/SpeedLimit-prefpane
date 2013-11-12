@@ -21,7 +21,7 @@
         if (!portValue) {
             return nil;
         }
-        [self setPort:[NSNumber numberWithInt:portValue]];
+        [self setPort:@(portValue)];
     }
 
     return self;

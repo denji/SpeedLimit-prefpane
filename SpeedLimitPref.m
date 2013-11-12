@@ -100,22 +100,22 @@ NSString *const AUTH_STATE_KEY = @"authstate";
     for (SLPort *thePort in [portsController arrangedObjects]) {
         [ports addObject:[[thePort port] stringValue]];
     }
-    [prefs setObject:ports forKey:PORTS_KEY];
+    prefs[PORTS_KEY] = ports;
 	if (self.delay) {
-		[prefs setObject:self.delay forKey:DELAY_KEY];
+		prefs[DELAY_KEY] = self.delay;
 	}
 	if (speed) {
-		[prefs setObject:[NSNumber numberWithInteger:speed.speed] forKey:SPEED_KEY];
+		prefs[SPEED_KEY] = @(speed.speed);
 	}
 	if (rules) {
-		[prefs setObject:rules forKey:RULES_KEY];
+		prefs[RULES_KEY] = rules;
 	}
 	if (self.hosts) {
-		[prefs setObject:self.hosts forKey:HOSTS_KEY];
+		prefs[HOSTS_KEY] = self.hosts;
 	}
 	
 	if (authorizationView) {
-		[prefs setObject:[NSNumber numberWithInteger:[authorizationView authorizationState]] forKey:AUTH_STATE_KEY];
+		prefs[AUTH_STATE_KEY] = @([authorizationView authorizationState]);
 	}
 	
 	[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:[[NSBundle bundleForClass:[self class]] bundleIdentifier]];
@@ -173,7 +173,7 @@ NSString *const AUTH_STATE_KEY = @"authstate";
 
 - (void)willSelect {
 	NSDictionary *prefs = [[NSUserDefaults standardUserDefaults] persistentDomainForName:[[NSBundle bundleForClass:[self class]] bundleIdentifier]];
-	NSArray *previousPorts = [prefs objectForKey:PORTS_KEY];
+	NSArray *previousPorts = prefs[PORTS_KEY];
 	[portsController removeObjects:[portsController arrangedObjects]];
 	if ([previousPorts count]) {
         for (NSString *object in [previousPorts objectEnumerator]) {
@@ -187,7 +187,7 @@ NSString *const AUTH_STATE_KEY = @"authstate";
 	}
 	[portsController setSelectedObjects:nil];
 	
-	NSString *previousDelay = [prefs objectForKey:DELAY_KEY];
+	NSString *previousDelay = prefs[DELAY_KEY];
 	if (previousDelay) {
 		self.delay = previousDelay;
 	}
@@ -195,7 +195,7 @@ NSString *const AUTH_STATE_KEY = @"authstate";
 		self.delay = @"250";
 	}
 	
-	NSString *previousHosts = [prefs objectForKey:HOSTS_KEY];
+	NSString *previousHosts = prefs[HOSTS_KEY];
 	if (previousHosts) {
 		self.hosts = previousHosts;
 	}
@@ -203,7 +203,7 @@ NSString *const AUTH_STATE_KEY = @"authstate";
 		self.hosts = @"";
 	}
 	
-	NSInteger previousSpeed = [[prefs objectForKey:SPEED_KEY] integerValue];
+	NSInteger previousSpeed = [prefs[SPEED_KEY] integerValue];
 	if (previousSpeed) {
 		for (Speed *loopSpeed in [speedsController arrangedObjects]) {
 			if (loopSpeed.speed == previousSpeed) {
@@ -212,9 +212,9 @@ NSString *const AUTH_STATE_KEY = @"authstate";
 		}
 	}
 	
-	authorizationState = [[prefs objectForKey:AUTH_STATE_KEY] integerValue];
+	authorizationState = [prefs[AUTH_STATE_KEY] integerValue];
 	
-	self.rules = [prefs objectForKey:RULES_KEY];
+	self.rules = prefs[RULES_KEY];
 	[speedLimitLabel setStringValue:@"∞"];
 	
 	/*if (authorizationState == SFAuthorizationViewLockedState)
@@ -276,7 +276,7 @@ NSString *const AUTH_STATE_KEY = @"authstate";
 			NSString *finalSpeed = [NSString stringWithFormat:@"%ld", speed.speed];
 			NSString *finalDelay = (self.delay == nil || [self.delay length] == 0) ? 0 : self.delay;
 			NSString *finalHosts = (self.hosts == nil) ? @"" : self.hosts;
-			NSString *finalPacketLossRatio = [[NSNumber numberWithDouble:self.packetLossRatio] stringValue];
+			NSString *finalPacketLossRatio = [@(self.packetLossRatio) stringValue];
 			NSString *finalPacketLossErrorSuppress = (self.packetLossErrorSuppress) ? @"yes" : @"no";
 			NSMutableArray *arguments = [NSMutableArray array];
 			[arguments addObject:finalSpeed];
