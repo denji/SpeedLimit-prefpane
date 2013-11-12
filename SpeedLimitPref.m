@@ -90,7 +90,7 @@ NSString *const AUTH_STATE_KEY = @"authstate";
 		// NSLog(@"SpeedLimiter output = %@", ipfwPipeStr);
 	}
 	
-	return [ipfwPipeStr autorelease];
+	return ipfwPipeStr;
 }
 
 - (void)saveSettings {
@@ -179,12 +179,11 @@ NSString *const AUTH_STATE_KEY = @"authstate";
         for (NSString *object in [previousPorts objectEnumerator]) {
             SLPort *newPort = [[SLPort alloc] initWithPort:[object intValue]];
             [portsController addObject:newPort];
-            [newPort release];
         }
 	}
 	else {
-		[portsController addObject:[[[SLPort alloc] initWithPort:80] autorelease]];
-		[portsController addObject:[[[SLPort alloc] initWithPort:443] autorelease]];
+		[portsController addObject:[[SLPort alloc] initWithPort:80]];
+		[portsController addObject:[[SLPort alloc] initWithPort:443]];
 	}
 	[portsController setSelectedObjects:nil];
 	
@@ -242,27 +241,6 @@ NSString *const AUTH_STATE_KEY = @"authstate";
 	[self saveSettings];
 }
 
--(void)dealloc {
-	[speedsController release];
-	[portsController release];
-	[speedLimitLabel release];
-	[portsView release];
-	[hostsTextField release];
-	[delayTextField release];
-	[speedsPopUpButton release];
-	[addButton release];
-	[removeButton release];
-	[startStopButton release];
-	
-	[hosts release];
-	[delay release];
-	[rules release];
-	
-	[authorizationView release];
-	
-	[super dealloc];
-}
-
 - (void)enableInterfaces:(BOOL)enable {
 
 	[portsView setEnabled:enable];
@@ -280,7 +258,6 @@ NSString *const AUTH_STATE_KEY = @"authstate";
 -(IBAction)addPort:(id)sender {
     SLPort *newPort = [[SLPort alloc] initWithPort:1000];
 	[portsController addObject:newPort];
-    [newPort release];
 }
 
 -(IBAction)removePort:(id)sender {

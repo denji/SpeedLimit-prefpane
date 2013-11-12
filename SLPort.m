@@ -19,7 +19,6 @@
     
     if (self != nil) {
         if (!portValue) {
-            [self release];
             return nil;
         }
         [self setPort:[NSNumber numberWithInt:portValue]];
@@ -30,12 +29,6 @@
 
 -(NSString *)description {
 	return [self.port description];
-}
-
-- (void)dealloc
-{
-    [port release];
-    [super dealloc];
 }
 
 @end
